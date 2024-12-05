@@ -1,6 +1,9 @@
 package br.com.alura.screenmatch.modelos;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Titulo implements Comparable<Titulo> {
+
     private String nome;
     private int anoDeLancamento;
     private boolean incluidoNoPlano;
@@ -11,6 +14,12 @@ public class Titulo implements Comparable<Titulo> {
     public Titulo(String nome, int anoDeLancamento) {
         this.nome = nome;
         this.anoDeLancamento = anoDeLancamento;
+    }
+
+    public Titulo(TituloOmdb meuTituloOmdb) {
+        this.nome = meuTituloOmdb.title();
+        this.anoDeLancamento = converterParaInteiro(meuTituloOmdb.year());
+        this.duracaoEmMinutos = converterParaInteiro(meuTituloOmdb.runtime().substring(0,2));
     }
 
     public String getNome() {
@@ -66,5 +75,19 @@ public class Titulo implements Comparable<Titulo> {
     @Override
     public int compareTo(Titulo outroTitulo) {
         return this.getNome().compareTo(outroTitulo.getNome());
+    }
+
+    @Override
+    public String toString() {
+        return " nome = " + nome +
+             "\n anoDeLancamento = " + anoDeLancamento +
+             "\n duracao = " + duracaoEmMinutos + " min";
+    }
+
+    public Integer converterParaInteiro(String valor){
+        String numero = valor.replaceAll("[^0-9]", "");
+        if(numero.isEmpty())
+            return 0;
+        return Integer.parseInt(numero);
     }
 }
