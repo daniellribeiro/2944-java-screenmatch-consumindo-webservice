@@ -8,13 +8,18 @@ import java.net.http.HttpResponse;
 import java.util.Scanner;
 
 public class APIConsulta {
-    public static void consulta(String endereco) throws IOException, InterruptedException {
+    public static String consulta(String endereco) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(endereco))
                     .build();
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if(response.statusCode() == 404){
+            throw new ErroConsultaGitHubException("Usuario nao encontrado");
+        }
         System.out.println(response.body());
+        return response.body().toString();
     }
 
     public static String montarEndereco(String nomeAPI, String parametro) {
@@ -26,6 +31,9 @@ public class APIConsulta {
             return "https://api.coingecko.com/api/v3/simple/price?ids=" + parametro + "&vs_currencies=brl";
         else if ("TheMealDB".equals(nomeAPI))
             return "https://www.themealdb.com/api/json/v1/1/search.php?s=" + parametro;
+        else if("UsuarioGithub".equals(nomeAPI)){
+            return "https://api.github.com/users/" + parametro;
+        }
 
         return "";
     }

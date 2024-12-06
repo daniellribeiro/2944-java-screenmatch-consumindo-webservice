@@ -19,7 +19,7 @@ public class Titulo implements Comparable<Titulo> {
     public Titulo(TituloOmdb meuTituloOmdb) {
         this.nome = meuTituloOmdb.title();
         this.anoDeLancamento = converterParaInteiro(meuTituloOmdb.year());
-        this.duracaoEmMinutos = converterParaInteiro(meuTituloOmdb.runtime().substring(0,2));
+        this.duracaoEmMinutos = converterParaInteiro(meuTituloOmdb.runtime().substring(0,3));
     }
 
     public String getNome() {
