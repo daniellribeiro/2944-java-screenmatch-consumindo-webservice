@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class APIConsulta {
     public static String consulta(String endereco) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
+        System.out.println(endereco);
         HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(endereco))
                     .build();
@@ -18,7 +19,10 @@ public class APIConsulta {
         if(response.statusCode() == 404){
             throw new ErroConsultaGitHubException("Usuario nao encontrado");
         }
-        System.out.println(response.body());
+        if(response.statusCode() == 200) {
+            System.out.println(response.body());
+        }
+
         return response.body().toString();
     }
 
@@ -33,6 +37,10 @@ public class APIConsulta {
             return "https://www.themealdb.com/api/json/v1/1/search.php?s=" + parametro;
         else if("UsuarioGithub".equals(nomeAPI)){
             return "https://api.github.com/users/" + parametro;
+        }else if("ViaCep".equals(nomeAPI)){
+            return "http://viacep.com.br/ws/" + parametro + "/json/";
+        }else{
+            System.out.println("API nao Localizada!!!!");
         }
 
         return "";

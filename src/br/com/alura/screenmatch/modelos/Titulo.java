@@ -79,9 +79,9 @@ public class Titulo implements Comparable<Titulo> {
 
     @Override
     public String toString() {
-        return " nome = " + nome +
-             "\n anoDeLancamento = " + anoDeLancamento +
-             "\n duracao = " + duracaoEmMinutos + " min";
+        return "\nnome = " + nome +
+             " anoDeLancamento = " + anoDeLancamento +
+             " duracao = " + duracaoEmMinutos + " min";
     }
 
     public Integer converterParaInteiro(String valor){
